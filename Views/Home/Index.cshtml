@@ -1,0 +1,161 @@
+﻿@{
+    string[] inc_type = ["macbook ng", "data wrong"];
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 col-sm-12 mb-3">
+            <div class="card">
+                <div class="card-header bg-white" style="border-left: 5px solid red; font-weight: bold;">
+                    <h5><strong>Incident Report</strong></h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mt-3">
+                         <div class="col-md-5 col-sm-12">
+                            <label><strong>Incident No.</strong></label>
+                         </div>
+                        <div class="col-md-7 col-sm-12">
+                            <label>INC-2026-0001</label>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-5 col-sm-12">
+                            <label><strong>Issue Data : </strong></label>
+                        </div>
+                        <div class="col-md-7 col-sm-12 ">
+                            27-Jan-2026
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-5 col-sm-12">
+                            <label><strong>Incident Type</strong></label>
+                        </div>
+                        <div class="col-md-7 col-sm-12 ">
+                            Internal ก.ล.ต
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-5 col-sm-12">
+                            <label><strong>EMP Detail</strong></label>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            [014783] : Manatsawin Sangon
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-5 col-sm-12">
+                            <label><strong>Incident Detail</strong></label>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            Mackbook can't turn off
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <label class="badge bg-warning">Pending Service</label>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white" style="border-left: 5px solid blue; font-weight: bold;">
+                    <h5><strong>Transaction Details</strong></h5>
+                </div>
+                <div class="card-body">
+                    <form id="tran_form" class="needs-validation" novalidate>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h5 class="border-bottom pb-2">Assignment & Transaction Level</h5>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-sm-12">
+                                <label class="form-label small" for="trans_level">Person in charge</label>
+                                <select class="form-select" id="trans_level"  required >
+                                    <option value="">Please select your level</option>
+                                    @{
+                                        foreach (var item in ViewBag.SupportLevels)
+                                        {
+                                            <optgroup label="@item.level">
+                                                @foreach (var subitem in item.person)
+                                                {
+                                                    <option>@subitem</option>
+                                                }
+                                            </optgroup>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label class="form-label small">Incident Date/Time</label>
+                                <input type="datetime-local" class="form-control " />
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h5 class="border-bottom pb-2">Component Information</h5>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small">Component detail trouble fix</label>
+                                <textarea class="form-control" rows="3" placeholder="Describe the fix details..." required></textarea>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h5 class="border-bottom pb-2">Implementation & Troubleshooting</h5>
+                            </div>
+                            <div class="col-md-6 col-sm-12 mb-2">
+                                <label class="form-label small">Actual Plan Start</label>
+                                <input type="datetime-local" class="form-control" required />
+                            </div>
+                            <div class="col-md-6 col-sm-12 mb-2">
+                                <label class="form-label small">Actual Plan End</label>
+                                <input type="datetime-local" class="form-control" required/>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <label class="form-label small">Troubleshoot Detail</label>
+                                <textarea class="form-control" rows="3" placeholder="Enter troubleshooting steps..." required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-12 col-sm-12 mb-2">
+                                <label class="form-label small">Actual Date :</label>
+                                <input type="datetime-local" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="d-grid shadow-sm">
+                            <button type="submit" class="btn btn-success btn-sm">Submit Report</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(() =>{
+        $("#tran_form").submit(function(e){
+            if(this.checkValidity() === false) {
+                e.preventDefault();
+                e.stopPropagation();
+            }else{
+                alert("save changed");
+            }
+
+            $(this).addClass("was-validated");
+        });
+    })
+
+
+</script>

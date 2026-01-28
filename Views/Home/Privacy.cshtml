@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Incident Report";
+}
+
+<div style="border-left : 10px solid blue">
+    <h1 class="p-2">@ViewData["Title"]</h1>
+</div>
+
+
+<p>Use for service problem about trobleshoot</p>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <form id="formSubmit" class="need-validation" novalidate>
+                    <div class="row gx-6">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="form-label small">Issue Date</label>
+                            <input type="datetime-local" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" placeholder="Please fill your Inciedent...." />
+                        </div>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <label class="form-label small">Incident Type</label>
+                        <div class="form-check form-check-inline gap-2">
+                            <input type="radio"
+                                   name="incident_type"
+                                   class="class=" form-check-input"
+                                   id="internal"
+                                   value="internal" checked />
+                            <label class="form-label" for="internal">Internal</label>
+
+                            <input type="radio"
+                                   name="incident_type"
+                                   class="class=" form-check-input"
+                                   id="external"
+                                   value="External" />
+                            <label class="form-label" for="external">External</label>
+                        </div>
+                    </div>
+
+                    <div class="row" id="internal_inc">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Internal ก.ล.ต Detail</h5>
+                                    <label class="form-label small">Employee No.</label>
+                                    <input class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="external_inc" style="display : none">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>External ก.ล.ต Detail</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label small">Email</label>
+                                            <input type="email" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label small">Name : </label>
+                                            <input class="form-control" disabled />
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label small">Company : </label>
+                                            <input type="text" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label class="form-label small">Phone : </label>
+                                            <input type="text" class="form-control" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-12 col-sm-12">
+                            <label class="form-label small">Service</label>
+                            <select class="form-select" required>
+                                <option value="">
+                                    Please choose service
+                                </option>
+                                @{
+
+                                    foreach (var service in ViewBag.Service)
+                                    {
+                                        <option>
+                                            @service
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label small">Incident Problem : </label>
+                            <textarea class="form-control" maxlength="100" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label small">Attach File : </label>
+                            <input type ="file" class="form-control" multiple required />
+                        </div>
+                    </div>
+
+                    <div class="d-grid shadow-sm mt-4">
+                        <button type="submit" class="btn btn-success btn-sm">Submit Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(() => {
+
+        $('input[name="incident_type"]').change(function() {
+            var incidentType = this.value;
+
+            if(incidentType === 'internal') {
+                $('#internal_inc').fadeIn();
+                $('#external_inc').hide();
+
+                $('#internal_inc').find('input').prop('disabled', false).prop('required', true);
+                $('#external_inc').find('input').prop('disabled', true).prop('required', false);
+
+            }else{
+                $('#internal_inc').hide();
+                $('#external_inc').fadeIn();
+
+                $('#internal_inc').find('input').prop('disabled', true).prop('required', false);
+                $('#external_inc').find('input').prop('disabled', false).prop('required', true);
+
+            }
+        })
+
+        $("#formSubmit").submit(function(e) {
+            if(this.checkValidity() === false){
+                e.preventDefault();
+                e.stopPropagation();
+            }else {
+                alert("completed")
+            }
+
+            $(this).addClass('was-validated')
+        })
+
+    });
+
+
+</script>
